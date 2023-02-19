@@ -18,9 +18,9 @@ void print_node(struct node node);
 struct simple_linked_list new_simple_linked_list();
 void print_list(struct simple_linked_list sll);
 void push(struct simple_linked_list* sll, struct node* new_node);
-struct node* remove_tail(struct simple_linked_list* sll);
+char* remove_tail(struct simple_linked_list* sll);
 struct node* find_first(struct simple_linked_list sll, char* data);
-struct node* remove_first(struct simple_linked_list* sll, char* data);
+char* remove_first(struct simple_linked_list* sll, char* data);
 
 int main() {
     struct simple_linked_list sll = new_simple_linked_list();
@@ -74,8 +74,9 @@ void push(struct simple_linked_list* sll, struct node* new_node) {
 }
 
 //deletes last node from list
-struct node* remove_tail(struct simple_linked_list* sll) {
-    struct node* node, *i;
+char* remove_tail(struct simple_linked_list* sll) {
+    struct node* node;
+    char* data;
     switch (sll->size) {
         case 0:
             return NULL;
@@ -94,8 +95,11 @@ struct node* remove_tail(struct simple_linked_list* sll) {
             sll->tail->next = NULL;
             break;
     }
+    data = node->data;
+    free(node);
+    node = NULL;
     sll->size--;
-    return node;
+    return data;
 }
 
 struct node* find_first(struct simple_linked_list sll, char* data) {
@@ -108,8 +112,9 @@ struct node* find_first(struct simple_linked_list sll, char* data) {
 }
  
  //deletes the first node matching the search criteria
-struct node* remove_first(struct simple_linked_list* sll, char* data) {
+char* remove_first(struct simple_linked_list* sll, char* data) {
     struct node *node, *aux;
+    char* removed_data;
     node = sll->head;
     //case 1: the head of the list matches the search criteria
     if(strcmp(node->data, data) == 0) {
@@ -138,8 +143,11 @@ struct node* remove_first(struct simple_linked_list* sll, char* data) {
             node->next = NULL;
         }     
     }
+    removed_data = node->data;
+    free(node);
+    node = NULL;
     sll->size--;
-    return node;
+    return removed_data;
 }
 
 //     if(node == NULL) {
