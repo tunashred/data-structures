@@ -18,7 +18,7 @@ void print_node(struct node node);
 struct simple_linked_list new_simple_linked_list();
 void print_list(struct simple_linked_list sll);
 void push(struct simple_linked_list* sll, struct node* new_node);
-struct node* pop(struct simple_linked_list* sll);
+struct node* remove_tail(struct simple_linked_list* sll);
 struct node* find_first(struct simple_linked_list sll, char* data);
 struct node* remove_first(struct simple_linked_list* sll, char* data);
 
@@ -34,7 +34,7 @@ int main() {
     // remove_first(&sll, "azi");
     // remove_first(&sll, "nu");
     // remove_first(&sll, "proaspat");
-    pop(&sll);
+    remove_tail(&sll);
     print_list(sll);
     return 0;
 }
@@ -74,7 +74,7 @@ void push(struct simple_linked_list* sll, struct node* new_node) {
 }
 
 //deletes last node from list
-struct node* pop(struct simple_linked_list* sll) {
+struct node* remove_tail(struct simple_linked_list* sll) {
     struct node* node, *i;
     switch (sll->size) {
         case 0:
