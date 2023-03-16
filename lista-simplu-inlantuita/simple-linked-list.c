@@ -149,21 +149,3 @@ char* remove_first(struct simple_linked_list* sll, char* data) {
     sll->size--;
     return removed_data;
 }
-
-//     if(node == NULL) {
-//         return NULL;
-//     }
-//     //case 3: the tail of the list matches the search criteria
-//     else if(node->next == NULL) {
-//         prev->next = NULL;
-//         sll.tail = prev;
-//     }
-//     //case 4: inner node matches the search criteria
-//     else {
-//         prev->next = node->next;
-//         node->next = NULL;
-//     }
-//     sll.size--;
-//     return node;
-// }
-
