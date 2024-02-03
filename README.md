@@ -1,1 +1,0 @@
-# lista-simplu-inlantuita
