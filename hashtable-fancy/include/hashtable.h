@@ -21,22 +21,18 @@ typedef struct hashtable {
     struct sll_node buckets[];
 } hashtable;
 
-unsigned long hash_charp(const char* key);
-unsigned long hash_charp_java(const char *key);
-unsigned long hash_void_charp(const void* key);
-unsigned long hash_void_charp_java(const void* key);
 void hashtable_create(
         unsigned int bucketCount,
-        unsigned long (*p_func_hashCode)(void*),
+        unsigned long (*p_func_hashCode)(const void*),
         char* (*p_func_printKey)(void*),
         char* (*p_func_printValue)(void*)
 );
+
 // void hashtable_print(hashtable *ht);
 // int hashtable_index(hashtable *ht, char *key);
 // char *hashtable_lookup(hashtable *ht, char *key);
 // bool hashtable_insert(hashtable *ht, char *name, char *nickname);
 // void free_user(struct user *user);
 // char *hashtable_remove(hashtable *ht, char *key);
-// void hashtable_destroy(hashtable *ht);
 
 #endif

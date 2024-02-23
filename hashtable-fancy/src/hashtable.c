@@ -3,7 +3,7 @@
 // returns hashtable
 void hashtable_create(
         unsigned int bucketCount,
-        unsigned long (*p_func_hashCode)(void*),
+        unsigned long (*p_func_hashCode)(const void*),
         char* (*p_func_printKey)(void*),
         char* (*p_func_printValue)(void*)
 ) {
