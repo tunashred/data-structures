@@ -7,8 +7,8 @@
 #include <stdbool.h>
 
 struct hashtableEntry {
-    void *key;
-    void *value;
+    void* key;
+    void* value;
 };
 
 struct sll_node {
