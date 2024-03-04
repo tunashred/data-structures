@@ -1,29 +1,26 @@
 TARGET_EXEC := hashtable
 
 INCLUDE_DIR := ./include
-BUILD_DIR := obj
+BUILD_DIR := ./build
 SOURCE_DIR := ./src
 
 CC := gcc
 INCLUDE_FLAGS := $(addprefix -I, $(INCLUDE_DIR))
 CFLAGS := $(INCLUDE_FLAGS) -MMD -MP
 
-SRCS := $(shell find $(SOURCE_DIR) -name '*.c')
-OBJS := $(patsubst %.c, %.o, $(SRCS))
+SRCS := $(wildcard $(SOURCE_DIR)/*.c)
+OBJS := $(patsubst $(SOURCE_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRCS))
 DEPS := $(OBJS:.o=.d)
 
-
-# Final build step
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
 	$(CC) $(OBJS) -o $@
 
-# Build step for C source files
-$(BUILD_DIR)/%.c.o: %.c
+$(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.c | $(BUILD_DIR)
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 .PHONY: clean
 clean:
-	rm -r $(BUILD_DIR)
+	rm -r $(BUILD_DIR)/*
 
 -include $(DEPS)
