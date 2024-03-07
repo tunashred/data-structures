@@ -1,28 +1,15 @@
-TARGET_EXEC := hashtable
-INCLUDE_DIR := ./include
-BUILD_DIR := ./build
-SOURCE_DIR := ./src
+build/hashtable: hashtable.o hashtable_type_util_charp.o hashtable_type_util_charp_java.o main.o
+	
 
-CC := gcc
-INCLUDE_FLAGS := $(addprefix -I, $(INCLUDE_DIR))
-CFLAGS := $(INCLUDE_FLAGS) -MMD -MP
 
-SRCS := $(wildcard $(SOURCE_DIR)/*.c)
-OBJS := $(patsubst $(SOURCE_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRCS))
-DEPS := $(OBJS:.o=.d)
+build/hashtable.o: src/hashtable.c include/hashtable.h
 
-$(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
-	$(CC) $^ -o $@
+build/hashtable_type_util_charp.o: src/hashtable_type_util_charp.c include/hashtable_type_util_charp.h
 
-$(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.c | $(BUILD_DIR)
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+build/hashtable_type_util_charp_java.o: src/hashtable_type_util_charp_java.c include/hashtable_type_util_charp_java.h
 
-$(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)
+build/main.o: src/main.c include/hashtable.h \
+ include/hashtable_type_util_charp.h \
+ include/hashtable_type_util_charp_java.h
 
-.PHONY: clean
-clean:
-	rm -rf $(BUILD_DIR)
 
--include $(DEPS)
