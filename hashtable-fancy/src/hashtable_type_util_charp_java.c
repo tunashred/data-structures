@@ -1,16 +1,18 @@
 #include "hashtable_type_util_charp_java.h"
 
+const unsigned short MAXLEN = 256;
+
 static unsigned long hash_charp_java(const char *key) {
     unsigned long hash = 0;
     int i;
-    for(i = 0; i < strnlen(key, 256); i++) {
+    for(i = 0; i < strnlen(key, MAXLEN); i++) {
         hash = 31 * hash + key[i];
     }
     return hash;
 }
 
 static bool equals_charp_java(const char* str1, const char* str2) {
-    return !strncmp(str1, str2, 256);
+    return !strncmp(str1, str2, MAXLEN);
 }
 
 static char* print_charp_java(const char* str) {

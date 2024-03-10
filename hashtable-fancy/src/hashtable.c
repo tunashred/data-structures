@@ -12,23 +12,23 @@ hashtable* hashtable_create(
     hashtable* ht = (hashtable*) malloc(sizeof(hashtable));
 
     *ht = (hashtable) {
-        .bucketCount = bucketCount,
-        .__hashCode = p_func_hashCode,
-        .__equals = p_func_equals,
-        .__printKey = p_func_printKey,
+        .bucketCount  = bucketCount,
+        .__hashCode   = p_func_hashCode,
+        .__equals     = p_func_equals,
+        .__printKey   = p_func_printKey,
         .__printValue = p_func_printValue,
-        .__freeKey = p_func_freeKey,
-        .__freeValue = p_func_freeValue,
+        .__freeKey    = p_func_freeKey,
+        .__freeValue  = p_func_freeValue,
         .buckets = (struct bucket*) calloc(bucketCount, sizeof(struct bucket))
     };
     return ht;
 }
 
-static unsigned int hashtable_index(hashtable *ht, const void* key) {
+static unsigned int hashtable_index(hashtable* ht, const void* key) {
     return ht->__hashCode(key) % ht->bucketCount;
 }
 
-bool hashtable_add(hashtable *ht, const void* key, const void* value) {
+bool hashtable_add(hashtable* ht, const void* key, const void* value) {
     if(!ht || !key) {
         return false;
     }
@@ -61,9 +61,9 @@ bool hashtable_add(hashtable *ht, const void* key, const void* value) {
     return true;
 }
 
-void* hashtable_get(hashtable *ht, const void* key) {
+void* hashtable_get(hashtable* ht, const void* key) {
     if(!ht || !key) {
-        return false;
+        return NULL;
     }
 
     unsigned int index = hashtable_index(ht, key);
@@ -79,7 +79,7 @@ void* hashtable_get(hashtable *ht, const void* key) {
     return NULL;
 }
 
-void hashtable_print(hashtable *ht) {
+void hashtable_print(hashtable* ht) {
     if(!ht) {
         return;
     }
@@ -99,7 +99,7 @@ void hashtable_print(hashtable *ht) {
     printf("=============== END  TABLE===============\n");
 }
 
-void* hashtable_remove(hashtable *ht, const void* key) {
+void* hashtable_remove(hashtable* ht, const void* key) {
     if(!ht || !key) {
         return NULL;
     }
