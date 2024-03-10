@@ -1,15 +1,39 @@
-build/hashtable: hashtable.o hashtable_type_util_charp.o hashtable_type_util_charp_java.o main.o
-	
+CC := gcc
+INCLUDE_FLAGS := -I include/
+CFLAGS := -Wall
+EXEC := hashtable
 
+build/$(EXEC): build/hashtable.o build/hashtable_type_util_charp.o build/hashtable_type_util_charp_java.o build/main.o
+	$(CC) build/hashtable.o build/hashtable_type_util_charp.o build/hashtable_type_util_charp_java.o build/main.o \
+		-o build/$(EXEC)
 
-build/hashtable.o: src/hashtable.c include/hashtable.h
+build/main.o: src/main.c include/hashtable.h include/hashtable_type_util_charp.h include/hashtable_type_util_charp_java.h | build
+	@$(CC) $(INCLUDE_FLAGS) \
+		  $(CFLAGS) \
+		  -c src/main.c \
+		  -o build/main.o \
 
-build/hashtable_type_util_charp.o: src/hashtable_type_util_charp.c include/hashtable_type_util_charp.h
+build/hashtable_type_util_charp.o: src/hashtable_type_util_charp.c include/hashtable_type_util_charp.h | build
+	@$(CC) $(INCLUDE_FLAGS) \
+		  $(CFLAGS) \
+		  -c src/hashtable_type_util_charp.c \
+		  -o build/hashtable_type_util_charp.o \
 
-build/hashtable_type_util_charp_java.o: src/hashtable_type_util_charp_java.c include/hashtable_type_util_charp_java.h
+build/hashtable_type_util_charp_java.o: src/hashtable_type_util_charp_java.c include/hashtable_type_util_charp_java.h | build
+	@$(CC) $(INCLUDE_FLAGS) \
+		  $(CFLAGS) \
+		  -c src/hashtable_type_util_charp_java.c \
+		  -o build/hashtable_type_util_charp_java.o \
 
-build/main.o: src/main.c include/hashtable.h \
- include/hashtable_type_util_charp.h \
- include/hashtable_type_util_charp_java.h
+build/hashtable.o: src/hashtable.c include/hashtable.h | build
+	@$(CC) $(INCLUDE_FLAGS) \
+		  $(CFLAGS) \
+		  -c src/hashtable.c \
+		  -o build/hashtable.o \
 
+build:
+	mkdir -p build
 
+.PHONY: clean
+clean: build
+	rm -r build
