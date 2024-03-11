@@ -2,7 +2,7 @@
 #define HASHTABLE_TYPE_UTIL_CHARP_JAVA_H
 
 #include <string.h>
-#include <stdbool.h>
+#include <stdbool.h>z
 
 /**
  * @brief Hashes void* key as char*
