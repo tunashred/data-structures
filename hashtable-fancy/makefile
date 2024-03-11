@@ -3,6 +3,12 @@ INCLUDE_FLAGS := -I include/
 CFLAGS := -Wall
 EXEC := hashtable
 
+KEEP_OBJECTS := no
+
+ifeq ($(filter --keep-objects=yes, $(MAKEFLAGS)), --keep-objects=yes)
+	KEEP_OBJECTS := yes
+endif
+
 build/$(EXEC): build/hashtable.o build/hashtable_type_util_charp.o build/hashtable_type_util_charp_java.o build/main.o
 	$(CC) build/hashtable.o build/hashtable_type_util_charp.o build/hashtable_type_util_charp_java.o build/main.o \
 		-o build/$(EXEC)
@@ -37,3 +43,9 @@ build:
 .PHONY: clean
 clean: build
 	rm -r build
+
+.PHONY: --keep-objects
+--keep-objects: KEEP_OBJECTS
+	ifeq(KEEP_OBJECTS, no)
+		rm -r build/*.o
+	endif
